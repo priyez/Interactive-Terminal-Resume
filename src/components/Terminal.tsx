@@ -167,13 +167,13 @@ Sept 2022 – Feb 2023 (Remote)
 
       <main>
         <h3 className="mb-4 flex">
-          Welcome to Sopiriye's interactive resume terminal! Type 'help' for
-          available commands.
+          Welcome to Sopiriye&apos;s interactive resume terminal! Type &apos;help&apos; for available commands.
         </h3>
+
 
         {/* Terminal history output */}
         {history.map((entry, idx) => (
-          <CommandOutput  key={idx} content={entry} />
+          <CommandOutput key={idx} content={entry} />
         ))}
 
         {/* Input prompt */}

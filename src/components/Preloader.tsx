@@ -36,7 +36,7 @@ const Preloader = ({ onComplete }: { onComplete?: () => void }) => {
             setLocation("Unknown");
           }
         );
-      } catch (err) {
+      } catch {
         setLocation("Unknown");
       }
     };
