@@ -112,7 +112,7 @@ BSc in Educational Management`,
 📱 Connect with me:
 
 🔗 LinkedIn: linkedin.com/in/sopiriye-jamabo
-💻 GitHub: github.com/sopiriye
+💻 GitHub: github.com/priyez
 🌐 Portfolio: sopiriye.xyz
 📧 Email: sopiriyejamabo@gmail.com
 🐦 Twitter: @sopiriye (coming soon)
