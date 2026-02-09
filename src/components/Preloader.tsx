@@ -1,6 +1,6 @@
-"use client"
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useLocation } from "@/hooks/useLocation";
 
 const rawSteps = [
   "Installing dependencies...",
@@ -14,43 +14,17 @@ const rawSteps = [
 
 const Preloader = ({ onComplete }: { onComplete?: () => void }) => {
   const [currentStep, setCurrentStep] = useState(0);
+  const location = useLocation();
   const [logs, setLogs] = useState<string[]>([]);
-  const [location, setLocation] = useState("Detecting...");
   const [finished, setFinished] = useState(false);
-
-  useEffect(() => {
-    const fetchLocation = async () => {
-      try {
-        navigator.geolocation.getCurrentPosition(
-          async (pos) => {
-            const { latitude, longitude } = pos.coords;
-            const res = await fetch(
-              `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
-            );
-            const data = await res.json();
-            const city = data.address.city || data.address.town || data.address.village || "Unknown";
-            const country = data.address.country_code?.toUpperCase() || "??";
-            setLocation(`${city}, ${country}`);
-          },
-          () => {
-            setLocation("Unknown");
-          }
-        );
-      } catch {
-        setLocation("Unknown");
-      }
-    };
-
-    fetchLocation();
-  }, []);
 
   useEffect(() => {
     if (currentStep < rawSteps.length) {
       const timeout = setTimeout(() => {
         let line = rawSteps[currentStep];
         line = line.replace("{location}", location);
-        setLogs((prev) => [...prev, line]);
-        setCurrentStep((prev) => prev + 1);
+        setLogs((prev: string[]) => [...prev, line]);
+        setCurrentStep((prev: number) => prev + 1);
       }, 1200);
       return () => clearTimeout(timeout);
     } else {
@@ -68,7 +42,7 @@ const Preloader = ({ onComplete }: { onComplete?: () => void }) => {
           transition={{ duration: 1, ease: "easeInOut" }}
           className="font-mono text-green-400 text-sm p-4 h-screen bg-black rounded-lg shadow-md"
         >
-          {logs.map((line, index) => (
+          {logs.map((line: string, index: number) => (
             <pre key={index} className="mb-1 whitespace-pre-wrap">
               {line}
             </pre>
