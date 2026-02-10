@@ -145,6 +145,18 @@ export const useTerminal = () => {
         setSuggestions(getSuggestions(value));
     }, [getSuggestions]);
 
+    // Clear input (for Ctrl+C)
+    const clearInput = useCallback(() => {
+        setInput("");
+        setSuggestions([]);
+    }, []);
+
+    // Clear terminal (for Ctrl+L)
+    const clearTerminal = useCallback(() => {
+        setHistory([]);
+        setSuggestions([]);
+    }, []);
+
     return {
         history,
         input,
@@ -154,5 +166,7 @@ export const useTerminal = () => {
         traverseHistory,
         suggestions,
         handleTabComplete,
+        clearInput,
+        clearTerminal,
     };
 };
