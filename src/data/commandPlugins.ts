@@ -3,6 +3,7 @@
  * Individual command implementations using the plugin architecture
  */
 
+
 import { CommandPlugin } from "@/lib/commandPlugin";
 import { getFlagValue } from "@/lib/commandParser";
 import { COMMANDS } from "./resume";

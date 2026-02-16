@@ -19,6 +19,7 @@ import {
     hackPlugin,
     matrixPlugin,
 } from "@/data/commandPlugins";
+import { trackCommand, initAnalytics, updateEngagementTime } from "@/lib/analytics";
 
 // Register all plugins
 commandRegistry.register(helpPlugin);
@@ -48,6 +49,7 @@ export const useTerminal = () => {
 
     // Load command history from localStorage on mount
     useEffect(() => {
+        initAnalytics();
         try {
             const saved = localStorage.getItem(HISTORY_KEY);
             if (saved) {
@@ -59,6 +61,13 @@ export const useTerminal = () => {
         } catch (error) {
             console.error("Failed to load command history:", error);
         }
+
+        // Update engagement time on unmount
+        const interval = setInterval(updateEngagementTime, 30000); // Every 30s
+        return () => {
+            clearInterval(interval);
+            updateEngagementTime();
+        };
     }, []);
 
     // Save command history to localStorage when it changes
@@ -105,6 +114,9 @@ export const useTerminal = () => {
 
         // Execute command via plugin system
         const output = commandRegistry.execute(parsed.command, parsed, commandContext);
+
+        // Track the command in analytics
+        trackCommand(parsed.command);
 
         // Don't add to history if clear command
         if (parsed.command !== "clear" && parsed.command !== "clr") {

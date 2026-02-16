@@ -57,8 +57,8 @@ export const metadata: Metadata = {
     creator: "@sopiriyejamabo",
   },
   icons: {
-    icon: emojiFavicon,              
-    apple: emojiFavicon,             
+    icon: emojiFavicon,
+    apple: emojiFavicon,
     shortcut: emojiFavicon,
   },
   manifest: "/site.webmanifest",
@@ -69,11 +69,28 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Sopiriye Jamabo",
+    "url": "https://sopiriye.xyz",
+    "jobTitle": "Software Developer",
+    "sameAs": [
+      "https://github.com/priyez",
+      "https://linkedin.com/in/sopiriye-jamabo"
+    ],
+    "description": "Software Developer specializing in React, Next.js, and creative web experiences."
+  };
+
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         {children}
       </body>
     </html>
